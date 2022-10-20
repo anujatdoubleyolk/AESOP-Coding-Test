@@ -9,3 +9,9 @@ export interface IPropsACcordian {
   title: string;
   children: React.ReactNode;
 }
+
+export interface IPropsListBox {
+  value: string;
+  onChange: (e: string) => any;
+  options: string[];
+}
