@@ -3,6 +3,7 @@ import Accodian from "../components/Accodian";
 import ListBox from "../components/ListBox";
 import Table from "../components/Table";
 import getCrimeRecord from "../services/getCrimeRecord";
+import getGroupByFilterWithTitle from "../utils/getGroupByFilterWithTitle";
 
 const initialState = {
   records: [],
@@ -39,61 +40,10 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    let title: string[] = [],
-      groupByFilter: Record<string, any>[] = [{}];
-    for (const record of records) {
-      if (groupBy === "Suburb") {
-        if (!title.includes(record[`Suburb - Incident`])) {
-          title.push(record[`Suburb - Incident`]);
-          groupByFilter[0][record[`Suburb - Incident`]] = [record];
-        } else {
-          groupByFilter[0][record[`Suburb - Incident`]] = [
-            ...groupByFilter[0][record[`Suburb - Incident`]],
-            record,
-          ];
-        }
-      } else if (groupBy === "Offence Level 1") {
-        if (!title.includes(record[`Offence Level 1 Description`])) {
-          title.push(record[`Offence Level 1 Description`]);
-          groupByFilter[0][record[`Offence Level 1 Description`]] = [record];
-        } else {
-          groupByFilter[0][record[`Offence Level 1 Description`]] = [
-            ...groupByFilter[0][record[`Offence Level 1 Description`]],
-            record,
-          ];
-        }
-      } else if (groupBy === "Offence Level 2") {
-        if (!title.includes(record[`Offence Level 2 Description`])) {
-          title.push(record[`Offence Level 2 Description`]);
-          groupByFilter[0][record[`Offence Level 2 Description`]] = [record];
-        } else {
-          groupByFilter[0][record[`Offence Level 2 Description`]] = [
-            ...groupByFilter[0][record[`Offence Level 2 Description`]],
-            record,
-          ];
-        }
-      } else if (groupBy === "Offence Level 3") {
-        if (!title.includes(record[`Offence Level 3 Description`])) {
-          title.push(record[`Offence Level 3 Description`]);
-          groupByFilter[0][record[`Offence Level 3 Description`]] = [record];
-        } else {
-          groupByFilter[0][record[`Offence Level 3 Description`]] = [
-            ...groupByFilter[0][record[`Offence Level 3 Description`]],
-            record,
-          ];
-        }
-      } else if (groupBy === "Reported Date") {
-        if (!title.includes(record[`Reported Date`])) {
-          title.push(record[`Reported Date`]);
-          groupByFilter[0][record[`Reported Date`]] = [record];
-        } else {
-          groupByFilter[0][record[`Reported Date`]] = [
-            ...groupByFilter[0][record[`Reported Date`]],
-            record,
-          ];
-        }
-      }
-    }
+    const { title, groupByFilter } = getGroupByFilterWithTitle(
+      records,
+      groupBy
+    );
     setState((prevState) => ({
       ...prevState,
       titles: title,
