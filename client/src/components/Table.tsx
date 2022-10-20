@@ -22,7 +22,10 @@ const Table: React.FC<ITableProps> = ({ cols, data }) => {
         {data?.map((record) => (
           <tr key={record._id} className="bg-white border-b">
             {Object.keys(record)?.map((r) => (
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+              <td
+                key={r}
+                className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+              >
                 {record[r]}
               </td>
             ))}

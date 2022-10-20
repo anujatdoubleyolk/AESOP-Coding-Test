@@ -1,7 +1,7 @@
 const getRecordsBasedOnTitle = (
   desc: string,
   groupByFilter: Record<string, any>[],
-  record: any,
+  record: Record<string, string>,
   title: string[]
 ) => {
   if (!title.includes(record[desc])) {
@@ -15,7 +15,10 @@ const getRecordsBasedOnTitle = (
   }
 };
 
-const getGroupByFilterWithTitle = (records: any, groupBy: string) => {
+const getGroupByFilterWithTitle = (
+  records: Record<string, string>[],
+  groupBy: string
+) => {
   let title: string[] = [],
     groupByFilter: Record<string, any>[] = [{}];
   for (const record of records) {

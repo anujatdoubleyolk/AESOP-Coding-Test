@@ -51,20 +51,17 @@ const Home = () => {
     }));
   }, [groupBy]);
 
+  const handleListBox = (groupBy: string) =>
+    setState((prevState) => ({
+      ...prevState,
+      groupBy,
+    }));
+
   return (
     <Fragment>
       <div className="ml-6 mx-6 my-6">
         <span className="font-semibold text-sm mr-5">Group BY</span>
-        <ListBox
-          value={groupBy}
-          onChange={(e) =>
-            setState((prevState) => ({
-              ...prevState,
-              groupBy: e,
-            }))
-          }
-          options={filters}
-        />
+        <ListBox value={groupBy} onChange={handleListBox} options={filters} />
       </div>
       {titles?.map((title, index) => (
         <Accodian key={index} title={title}>
@@ -73,6 +70,7 @@ const Home = () => {
               <div className="py-4 inline-block min-w-full sm:px-6 lg:px-8">
                 <div className="overflow-hidden">
                   <Table
+                    key={title + index}
                     cols={Object.keys(records?.[0])}
                     data={recordByGroup?.[0]?.[title]}
                   />
