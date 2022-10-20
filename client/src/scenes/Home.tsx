@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import Accodian from "../components/Accodian";
 import ListBox from "../components/ListBox";
 import Table from "../components/Table";
+import getCrimeRecord from "../services/getCrimeRecord";
 
 const initialState = {
   records: [],
@@ -27,24 +28,14 @@ const Home = () => {
   }>(initialState);
 
   useEffect(() => {
-    async function getCrimeRecord() {
-      try {
-        const response = await fetch(
-          `${process.env.REACT_APP_BASE_URL}getRecords`
-        );
-        const { data } = await response.json();
-        console.log("data", Object.keys(data[0]));
-        setState((prevState) => ({
-          ...prevState,
-          records: data,
-          groupBy: "Suburb",
-        }));
-      } catch (error) {
-        setState(initialState);
-      }
-    }
-
-    getCrimeRecord();
+    (async () => {
+      const data = await getCrimeRecord();
+      setState((prevState) => ({
+        ...prevState,
+        records: data,
+        groupBy: "Suburb",
+      }));
+    })();
   }, []);
 
   useEffect(() => {
